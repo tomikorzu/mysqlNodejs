@@ -7,8 +7,15 @@ const connection = mysql.createConnection({
   database: 'mysqlNodejsDB',
 });
 
+let {database:databaseName} = connection.config
+
+
 connection.connect((err) => {
-    if (err) throw err;
-    console.log("Connected to MySQL");
+    if (err){
+        throw err
+    } else{
+        console.log(`Connected to ${databaseName} database`)
+    }
+    connection.end()
     }
 );

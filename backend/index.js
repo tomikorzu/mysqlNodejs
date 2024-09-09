@@ -16,6 +16,23 @@ connection.connect((err) => {
     } else{
         console.log(`Connected to ${databaseName} database`)
     }
-    connection.end()
-    }
+}
 );
+
+const users = `SELECT * from users`
+const username = `SELECT username from users`
+connection.query(users, (err, list) => {
+    if (err){ 
+        throw err
+    } else{
+        console.log(list)
+    }
+})
+connection.query(username, (err, list) => {
+    if (err){ 
+        throw err
+    } else{
+        console.log(list.length)
+    }
+})
+connection.end()

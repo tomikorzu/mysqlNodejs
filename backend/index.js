@@ -18,10 +18,11 @@ connection.connect((err) => {
 });
 
 // seeTableElements("users", "username");
-
 // setTableValues(["username", "password", "email"], "users", [
 //   `'ricardo', 'ricardo123', 'ricardo@hola.com'`,
 // ]);
+// seeFirstElement("users");
+// seeLastElement("users");
 
 function seeTableElements(tableName, selection) {
   const element = `SELECT ${selection} FROM ${tableName}`;
@@ -44,4 +45,26 @@ function setTableValues(columns, table, columnsValues) {
     }
   });
 }
+function seeFirstElement(tableName) {
+    const element = `SELECT * FROM ${tableName} ORDER BY id ASC LIMIT 1`;
+    connection.query(element, (err,list) => {
+        if (err){
+            throw err
+        } else{
+            console.log(list)
+        }
+    })
+}
+function seeLastElement(tableName) {
+  const element = `SELECT * FROM ${tableName} ORDER BY id DESC LIMIT 1`;
+  connection.query(element, (err, list) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(list);
+    }
+  });
+}
+
+//change elements 
 connection.end();

@@ -1,38 +1,57 @@
 const mysql = require("mysql");
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'P@ssw0rd#2024',
-  database: 'mysqlNodejsDB',
+  host: "localhost",
+  user: "root",
+  password: "P@ssw0rd#2024",
+  database: "mysqlNodejsDB",
 });
 
-let {database:databaseName} = connection.config
-
+let { database: databaseName } = connection.config;
 
 connection.connect((err) => {
-    if (err){
-        throw err
-    } else{
-        console.log(`Connected to ${databaseName} database`)
-    }
-}
-);
+  if (err) {
+    throw err;
+  } else {
+    console.log(`Connected to ${databaseName} database`);
+  }
+});
 
-const users = `SELECT * from users`
-const username = `SELECT username from users`
-connection.query(users, (err, list) => {
-    if (err){ 
-        throw err
-    } else{
-        console.log(list)
+function seeTableElements(tableName, selection) {
+  const element = `SELECT ${selection} FROM ${tableName}`;
+  connection.query(element, (err, list) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(list);
     }
-})
-connection.query(username, (err, list) => {
-    if (err){ 
-        throw err
-    } else{
-        console.log(list.length)
+  });
+}
+
+seeTableElements("users", "username");
+
+setTableValues(["username", "password", "email"], "users", [
+  `'ricardo', 'ricardo123', 'ricardo@hola.com'`,
+]);
+
+function setTableValues(columns, table, columnsValues) {
+  const element = `INSERT INTO ${table} (${columns}) VALUES (${columnsValues})`;
+  connection.query(element, (err, rows) => {
+    if (err) {
+      throw errlist;
+    } else {
+      console.log("column values sended correctly");
     }
-})
-connection.end()
+  });
+}
+
+// connection.query(username, (err, list) => {
+//     if (err){
+//         throw err
+//     } else{
+//         console.log(list[0].username)
+//         console.log(list.length)
+//     }
+// })
+
+connection.end();
